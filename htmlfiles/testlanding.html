@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya Language Bridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for language flags */
+        .flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .flag:hover {
+            transform: scale(1.2);
+        }
+
+        .flag.english {
+            background-image: url('https://flagcdn.com/w40/gb.png');
+        }
+        .flag.swahili {
+            background-image: url('https://flagcdn.com/w40/ke.png');
+        }
+        .flag.kikuyu {
+            background-image: url('https://flagcdn.com/w40/ke.png');
+        }
+        .flag.luo {
+            background-image: url('https://flagcdn.com/w40/ke.png');
+        }
+        .flag.sheng {
+            background-image: url('https://flagcdn.com/w40/ke.png');
+        }
+
+        /* Style for image translation */
+        .image-upload-icon {
+            width: 40px;  /* Increased size for the icon */
+            height: 40px;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/2552/2552628.png'); /* Replace with an image upload icon */
+            background-size: cover;
+            background-position: center;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            margin-left: 10px;
+        }
+
+        .image-upload-icon:hover {
+             transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-10">
+        <header class="bg-white rounded-lg shadow-md py-6 px-8 mb-8 flex justify-between items-center">
+            <div class="logo text-xl font-bold text-green-500">
+                <span class="text-black">Kenya</span> Language Bridge
+            </div>
+            <div class="language-selection flex items-center">
+                <span class="mr-4 text-gray-700 font-medium">Select Language:</span>
+                <div class="flex gap-2">
+                    <div class="flag english" data-language="en"></div>
+                    <div class="flag swahili" data-language="sw"></div>
+                    <div class="flag kikuyu" data-language="ki"></div>
+                    <div class="flag luo" data-language="lu"></div>
+                    <div class="flag sheng" data-language="sh"></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="bg-gradient-to-br from-teal-500 to-indigo-500 text-white rounded-lg shadow-lg py-16 px-10 mb-8 flex flex-col items-center text-center">
+            <h1 class="text-3xl font-bold mb-4">See It, Understand It</h1>
+            <p class="text-lg mb-8">Translate text from images instantly.  Making signs, documents, and more accessible.</p>
+            <div class="flex items-center justify-center w-full">
+                <button id="image-translate-btn" class="bg-white text-teal-500 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition duration-300 ease-in-out shadow-md flex items-center">
+                    <span class="mr-3">Image Translate</span>
+                    <div class="image-upload-icon"></div>
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-lg shadow-md py-10 px-8 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="service-card bg-gray-100 rounded-lg p-6 flex flex-col justify-between">
+                    <h3 class="text-xl font-semibold text-teal-500 mb-4">Image Translation</h3>
+                    <p class="text-gray-700 mb-4">Upload an image and get the text translated.</p>
+                </div>
+                <div class="service-card bg-gray-100 rounded-lg p-6 flex flex-col justify-between">
+                    <h3 class="text-xl font-semibold text-teal-500 mb-4">Wide Language Support</h3>
+                    <p class="text-gray-700 mb-4">Translate to and from many Kenyan languages.</p>
+                </div>
+                <div class="service-card bg-gray-100 rounded-lg p-6 flex flex-col justify-between">
+                    <h3 class="text-xl font-semibold text-teal-500 mb-4">User-Friendly Interface</h3>
+                    <p class="text-gray-700 mb-4">Simple and intuitive design for all users.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-800 text-white rounded-lg py-4 px-8 text-center">
+            <p>© 2025 Kenya Language Bridge. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const languageFlags = document.querySelectorAll('.flag');
+        const getStartedBtn = document.getElementById('image-translate-btn');
+
+        languageFlags.forEach(flag => {
+            flag.addEventListener('click', function() {
+                const language = this.dataset.language;
+                alert(`Language selected: ${language}`);
+            });
+        });
+
+        getStartedBtn.addEventListener('click', function() {
+                alert('Initiating image translation...');
+        });
+
+    </script>
+</body>
+</html>

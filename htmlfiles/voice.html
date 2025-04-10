@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-Pesa Instructions & Help</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the select dropdowns to match the image */
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            flex-grow: 1;
+            min-width: 200px; /* Increased width of the dropdown */
+        }
+
+        .custom-select-trigger {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            background-color: white;
+            border-width: 1px;
+            border-color: #d1d5db; /* Tailwind's border-gray-300 */
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            color: #374151; /* Tailwind's text-gray-800 */
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        }
+
+        .custom-select-trigger:hover, .custom-select-wrapper:focus-within .custom-select-trigger {
+            border-color: #3b82f6; /* Tailwind's border-blue-500 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);  /* blue-500 with opacity for focus ring */
+        }
+
+        .custom-select-trigger span {
+            margin-right: 0.5rem;
+        }
+
+        .custom-select-trigger svg {
+            height: 1rem;
+            width: 1rem;
+            fill: currentColor;
+            color: #4b5563; /* Tailwind's text-gray-500 */
+        }
+
+        .custom-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: auto; /* Corrected to auto */
+            z-index: 20;
+            background-color: white;
+            border-width: 1px;
+            border-color: #d1d5db; /* Tailwind's border-gray-300 */
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            margin-top: 0.25rem; /* Tailwind's mt-1 */
+            overflow: auto;
+            max-height: 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Slightly stronger shadow */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, transform 0.15s ease-in-out;
+        }
+
+        .custom-select-wrapper.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .custom-options li {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: #374151; /* Tailwind's text-gray-800 */
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+            white-space: nowrap;
+        }
+
+        .custom-options li:hover, .custom-options li.selected {
+            background-color: #f0f9ff; /* Tailwind's bg-blue-50 */
+            color: #1e40af; /* Tailwind's text-blue-700 */
+        }
+
+        .custom-select-wrapper select {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        /* Style for voice translation */
+        .voice-translation {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .voice-translation:hover {
+            background-color: #f0f9ff; /* Light background on hover */
+        }
+
+        .voice-icon {
+            width: 1rem;
+            height: 1rem;
+            background-image: url("https://cdn-icons-png.flaticon.com/512/1902/1902692.png"); /* Replace with a suitable voice icon URL */
+            background-size: cover;
+            display: inline-block;
+        }
+
+        .voice-text {
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6">M-Pesa Instructions & Help</h1>
+
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="custom-select-wrapper" id="language-select-wrapper">
+                <div class="custom-select-trigger" id="language-select-trigger">
+                    <span>Language</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+                <div class="custom-options" id="language-select-options">
+                    <select class="hidden">
+                        <option value="en">English</option>
+                        <option value="sw">Kiswahili</option>
+                        <option value="lu">Luo</option>
+                        <option value="ki">Kikuyu</option>
+                        <option value="kl">Kalenjin</option>
+                    </select>
+                    <ul>
+                        <li data-value="en">English</li>
+                        <li data-value="sw">Kiswahili</li>
+                        <li data-value="lu">Luo</li>
+                        <li data-value="ki">Kikuyu</li>
+                        <li data-value="kl">Kalenjin</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="custom-select-wrapper" id="topic-select-wrapper">
+                <div class="custom-select-trigger" id="topic-select-trigger">
+                    <span>Topic</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+                <div class="custom-options" id="topic-select-options">
+                    <select class="hidden">
+                        <option value="send">Send Money</option>
+                        <option value="payment">Payment</option>
+                        <option value="withdraw">Withdrawal</option>
+                        <option value="airtime">Airtime</option>
+                    </select>
+                    <ul>
+                        <li data-value="send">Send Money</li>
+                        <li data-value="payment">Payment</li>
+                        <li data-value="withdraw">Withdrawal</li>
+                        <li data-value="airtime">Airtime</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <input type="text" id="content-search" placeholder="Search by content" class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <button id="search-button" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+                    Search
+                </button>
+            </div>
+        </div>
+        <button id="reset-button" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded-md transition duration-300 mb-6">
+            Reset
+        </button>
+
+        <div id="results-container" class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Results</h2>
+            <p class="text-gray-600">No results found. Please select a language and topic, or use the search bar.</p>
+            </div>
+
+        <div class="fixed bottom-4 right-4 bg-white rounded-full shadow-lg p-4 flex items-center gap-2 cursor-pointer hover:shadow-xl transition duration-300">
+            <p class="text-blue-500 font-semibold">Need Help? Chat with Emma</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-user"><path d="M20.11 3.13a8 8 0 0 1 0 11.31L12 20l-8.11-5.56a8 8 0 0 1 0-11.31a8 8 0 0 1 11.31 0Z"/><path d="M18 8a2 2 0 1 0-4 0a2 2 0 0 0 4 0Z"/><path d="M6.1 15.1a7 7 0 0 0 12.8 0"/></svg>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSelectWrapper = document.getElementById('language-select-wrapper');
+            const languageSelectTrigger = document.getElementById('language-select-trigger');
+            const languageSelectOptions = document.getElementById('language-select-options');
+            const languageSelectElement = document.querySelector('#language-select-options select');
+
+            const topicSelectWrapper = document.getElementById('topic-select-wrapper');
+            const topicSelectTrigger = document.getElementById('topic-select-trigger');
+            const topicSelectOptions = document.getElementById('topic-select-options');
+            const topicSelectElement = document.querySelector('#topic-select-options select');
+
+
+            const resetButton = document.getElementById('reset-button');
+            const searchButton = document.getElementById('search-button');
+            const contentSearchInput = document.getElementById('content-search');
+
+            const resultsContainer = document.getElementById('results-container');
+
+            let selectedLanguage = '';
+            let selectedTopic = '';
+
+            function createCustomDropdown(selectWrapper, selectTrigger, selectOptions, selectElement, onChangeCallback) {
+                selectTrigger.addEventListener('click', () => {
+                    selectWrapper.classList.toggle('open');
+                    if (selectWrapper.classList.contains('open')) {
+                         // Calculate and set dropdown position and width when opening
+                        const triggerRect = selectTrigger.getBoundingClientRect();
+                        selectOptions.style.top = triggerRect.bottom + 'px';
+                        selectOptions.style.left = triggerRect.left + 'px';
+                        selectOptions.style.width = triggerRect.width + 'px';
+                    }
+                });
+
+                selectOptions.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'LI') {
+                        const value = event.target.dataset.value;
+                        const label = event.target.textContent;
+                        selectTrigger.querySelector('span').textContent = label;
+                        selectElement.value = value;
+                        selectWrapper.classList.remove('open');
+                        onChangeCallback(value);
+                    }
+                });
+
+                selectElement.addEventListener('change', (event) => {
+                    const label = selectOptions.querySelector(`[data-value="${event.target.value}"]`).textContent;
+                    selectTrigger.querySelector('span').textContent = label;
+                    onChangeCallback(event.target.value);
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (event) => {
+                    if (!selectWrapper.contains(event.target) && !selectOptions.contains(event.target)) {
+                        selectWrapper.classList.remove('open');
+                    }
+                });
+            }
+
+            createCustomDropdown(languageSelectWrapper, languageSelectTrigger, languageSelectOptions, languageSelectElement, (value) => {
+                selectedLanguage = value;
+            });
+
+            createCustomDropdown(topicSelectWrapper, topicSelectTrigger, topicSelectOptions, topicSelectElement, (value) => {
+                selectedTopic = value;
+            });
+
+
+
+            resetButton.addEventListener('click', () => {
+                selectedLanguage = '';
+                selectedTopic = '';
+                contentSearchInput.value = '';
+                languageSelectTrigger.querySelector('span').textContent = 'Language';
+                topicSelectTrigger.querySelector('span').textContent = 'Topic';
+                languageSelectElement.value = '';
+                topicSelectElement.value = '';
+                resultsContainer.innerHTML = '<h2 class="text-xl font-semibold text-gray-800 mb-4">Results</h2><p class="text-gray-600">No results found. Please select a language and topic, or use the search bar.</p>';
+            });
+
+            searchButton.addEventListener('click', () => {
+                performSearch(selectedLanguage, selectedTopic, contentSearchInput.value);
+            });
+
+            contentSearchInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch(selectedLanguage, selectedTopic, contentSearchInput.value);
+                }
+            });
+
+
+            function performSearch(language, topic, query) {
+                let resultsHTML = '<h2 class="text-xl font-semibold text-gray-800 mb-4">Results</h2>';
+                let hasResults = false;
+
+                // Simulate search logic (replace with your actual search implementation)
+                const dummyResults = [
+                    { language: 'en', topic: 'send', title: 'How to Send Money', content: 'Step-by-step guide on sending money via M-Pesa.' },
+                    { language: 'sw', topic: 'send', title: 'Jinsi ya Kutuma Pesa', content: 'Mwongozo wa hatua kwa hatua wa kutuma pesa kupitia M-Pesa.' },
+                    { language: 'en', topic: 'payment', title: 'Making Payments', content: 'Instructions for paying bills and merchants with M-Pesa.' },
+                    { language: 'sw', topic: 'payment', title: 'Kufanya Malipo', content: 'Maelekezo ya kulipa bili na wafanyabiashara kwa M-Pesa.' },
+                     { language: 'en', topic: 'withdraw', title: 'Withdrawing Money', content: 'Instructions on how to withdraw money.' },
+                    { language: 'sw', topic: 'withdraw', title: 'Kutoa Pesa', content: 'Maelekezo juu ya jinsi ya kutoa pesa.' },
+                    { language: 'en', topic: 'airtime', title: 'Buying Airtime', content: 'Instructions on how to buy airtime.' },
+                    { language: 'sw', topic: 'airtime', title: 'Kununua Muda wa Maongezi', content: 'Maelekezo juu ya jinsi ya kununua muda wa maongezi.' },
+                    { language: 'lu', topic: 'send', title: 'How to Send Money in Luo', content: 'Luo instructions on sending money via M-Pesa.' },
+                    { language: 'ki', topic: 'send', title: 'How to Send Money in Kikuyu', content: 'Kikuyu instructions on sending money via M-Pesa.' },
+                    { language: 'kl', topic: 'send', title: 'How to Send Money in Kalenjin', content: 'Kalenjin instructions on sending money via M-Pesa.' },
+                ];
+
+                const filteredResults = dummyResults.filter(result => {
+                    return (
+                        (!language || result.language === language) &&
+                        (!topic || result.topic === topic) &&
+                        (!query || result.title.toLowerCase().includes(query.toLowerCase()) || result.content.toLowerCase().includes(query.toLowerCase()))
+                    );
+                });
+
+                if (filteredResults.length > 0) {
+                    hasResults = true;
+                    resultsHTML += '<ul class="border rounded-md">';
+                    filteredResults.forEach(result => {
+                        const titleColor = result.language === 'en' ? 'blue-600' : 'black';
+                        resultsHTML += `
+                            <li class="border-b last:border-0 p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold text-lg text-${titleColor}">${result.title}</h3>
+                                        <p class="text-gray-700">${result.content}</p>
+                                    </div>
+                                    <div class="voice-translation" data-text="${result.content}" data-language="${result.language}">
+                                        <div class="voice-icon"></div>
+                                        <span class="voice-text">Listen</span>
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                    });
+                    resultsHTML += '</ul>';
+                }
+
+                resultsContainer.innerHTML = hasResults ? resultsHTML : '<h2 class="text-xl font-semibold text-gray-800 mb-4">Results</h2><p class="text-gray-600">No matching results found.</p>';
+
+                // Attach event listeners to voice translation icons after they are rendered
+                if (hasResults) {
+                    const voiceTranslationElements = document.querySelectorAll('.voice-translation');
+                    voiceTranslationElements.forEach(element => {
+                        element.addEventListener('click', () => {
+                            const text = element.dataset.text;
+                            const language = element.dataset.language;
+                            speakText(text, language);
+                        });
+                    });
+                }
+            }
+
+            // Function to handle text-to-speech
+            function speakText(text, language) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = language === 'sw' ? 'sw-KE' : 'en-US'; // Set language for Kiswahili and English
+                speechSynthesis.speak(utterance);
+            }
+        });
+    </script>
+</body>
+</html>

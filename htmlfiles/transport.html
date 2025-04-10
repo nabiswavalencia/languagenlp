@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Transport Company</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for demonstration - adjust as needed */
+        .service-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .service-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .route-result {
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-100">
+    <header class="bg-blue-500 text-white py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-semibold">Your Transport Company</h1>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:text-blue-200 transition duration-300">Home</a></li>
+                    <li><a href="#about" class="hover:text-blue-200 transition duration-300">About Us</a></li>
+                    <li><a href="#services" class="hover:text-blue-200 transition duration-300">Services</a></li>
+                    <li><a href="#routes" class="hover:text-blue-200 transition duration-300">Routes</a></li>
+                    <li><a href="#fares" class="hover:text-blue-200 transition duration-300">Fares</a></li>
+                    <li><a href="#contact" class="hover:text-blue-200 transition duration-300">Contact Us</a></li>
+                    <li><a href="#" class="hover:text-blue-200 transition duration-300">Login/Sign Up</a></li>
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none focus:shadow-outline">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                    </svg>
+                </button>
+                <div id="mobile-menu" class="hidden absolute top-16 right-0 bg-blue-500 shadow-lg rounded-md py-2 px-4 space-y-3">
+                    <a href="#" class="block text-white hover:text-blue-200 transition duration-300">Home</a>
+                    <a href="#about" class="block text-white hover:text-blue-200 transition duration-300">About Us</a>
+                    <a href="#services" class="block text-white hover:text-blue-200 transition duration-300">Services</a>
+                    <a href="#routes" class="block text-white hover:text-blue-200 transition duration-300">Routes</a>
+                    <a href="#fares" class="block text-white hover:text-blue-200 transition duration-300">Fares</a>
+                    <a href="#contact" class="block text-white hover:text-blue-200 transition duration-300">Contact Us</a>
+                    <a href="#" class="block text-white hover:text-blue-200 transition duration-300">Login/Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="bg-blue-100 text-gray-800 text-center py-20 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-semibold mb-4">Connecting You to Your Destination</h2>
+                <p class="text-lg mb-8">Your trusted transport provider for safe and reliable journeys.</p>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition duration-300 text-lg">Book a Ticket</button>
+            </div>
+        </section>
+
+        <section id="services" class="container mx-auto py-16 px-4">
+            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card">
+                    <h3 class="text-xl font-semibold mb-4">Bus Transport</h3>
+                    <p class="text-gray-700 mb-4">Reliable and comfortable bus services across the region.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300">More Details</a>
+                </div>
+                <div class="service-card">
+                    <h3 class="text-xl font-semibold mb-4">Train Service</h3>
+                    <p class="text-gray-700 mb-4">Fast and efficient train travel for long-distance journeys.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300">More Details</a>
+                </div>
+                <div class="service-card">
+                    <h3 class="text-xl font-semibold mb-4">Airport Shuttle</h3>
+                    <p class="text-gray-700 mb-4">Convenient shuttle service to and from major airports.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300">More Details</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="routes" class="bg-gray-100 py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Routes and Schedules</h2>
+                <div class="flex flex-col md:flex-row gap-4 mb-8">
+                    <input type="text" placeholder="Origin" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    <input type="text" placeholder="Destination" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    <input type="date" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition duration-300">Search Routes</button>
+                </div>
+                <div id="route-results">
+                     <div class="route-result">
+                        <h4 class="text-lg font-semibold text-gray-800">Route A</h4>
+                        <p class="text-gray-600">Departure: 8:00 AM, Arrival: 10:00 AM, Duration: 2 hours</p>
+                        <p class="text-gray-600">Stops: City 1, City 2</p>
+                        <p class="text-gray-700 font-semibold">Fare: $20</p>
+                        <p class="text-gray-600">Vehicle: Bus</p>
+                    </div>
+                    <div class="route-result">
+                        <h4 class="text-lg font-semibold text-gray-800">Route B</h4>
+                        <p class="text-gray-600">Departure: 11:00 AM, Arrival: 1:30 PM, Duration: 2.5 hours</p>
+                        <p class="text-gray-600">Stops: City 3</p>
+                        <p class="text-gray-700 font-semibold">Fare: $25</p>
+                        <p class="text-gray-600">Vehicle: Train</p>
+                    </div>
+                </div>
+                 <div id="map" class="mt-8 h-[400px] border border-gray-300 rounded-md">
+                    <p class="text-center py-4">Map Integration Placeholder (e.g., Google Maps)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fares" class="container mx-auto py-16 px-4">
+            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Fares and Tickets</h2>
+            <div class="flex flex-col md:flex-row gap-6 mb-8">
+                <input type="text" placeholder="Origin" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <input type="text" placeholder="Destination" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition duration-300">Calculate Fare</button>
+            </div>
+            <div class="bg-white rounded-md shadow-md p-6 mb-8">
+                <h3 class="text-xl font-semibold mb-4">Fare Table</h3>
+                <table class="w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left py-2 px-4">Route</th>
+                            <th class="text-left py-2 px-4">Fare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-bottom">City A to City B</td>
+                            <td class="py-2 px-4 border-bottom">$20</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-bottom">City A to City C</td>
+                            <td class="py-2 px-4 border-bottom">$30</td>
+                        </tr>
+                         <tr>
+                            <td class="py-2 px-4">City B to City C</td>
+                            <td class="py-2 px-4">$15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Ticket Purchase Options</h3>
+                <ul class="list-disc list-inside space-y-2">
+                    <li><a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300">Online Booking</a></li>
+                    <li>Mobile Ticketing (Download our app)</li>
+                    <li>Ticket office locations</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="about" class="bg-blue-100 py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">About Us</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4">Our Company</h3>
+                        <p class="text-gray-700 mb-4">
+                            We are a leading transport provider with a long history of connecting people and places.  Our mission is to provide safe, reliable, and affordable transportation solutions.
+                        </p>
+                        <p class="text-gray-700">
+                            We are committed to excellence in service and customer satisfaction.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4">Mission & Vision</h3>
+                        <p class="text-gray-700 mb-4"><span class="font-semibold">Our Mission:</span> To be the most trusted and efficient transport provider, exceeding customer expectations.</p>
+                        <p class="text-gray-700"><span class="font-semibold">Our Vision:</span> To connect communities and drive economic growth through sustainable transportation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container mx-auto py-16 px-4">
+            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Contact Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <form class="bg-white rounded-md shadow-md p-6 space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                            <input type="text" id="name" placeholder="Your Name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input type="email" id="email" placeholder="Your Email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+                            <textarea id="message" placeholder="Your Message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-y"></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300">Send Message</button>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Our Contact Information</h3>
+                    <ul class="space-y-2">
+                        <li class="text-gray-700"><span class="font-semibold">Phone:</span> +254 123 456789</li>
+                        <li class="text-gray-700"><span class="font-semibold">Email:</span> info@yourtransport.com</li>
+                        <li class="text-gray-700"><span class="font-semibold">Address:</span> 123 Transport Avenue, City, Country</li>
+                    </ul>
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold mb-2">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300" aria-label="Facebook">Facebook</a>
+                            <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300" aria-label="Twitter">Twitter</a>
+                            <a href="#" class="text-blue-500 hover:text-blue-700 transition duration-300" aria-label="Instagram">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Your Transport Company. All rights reserved.</p>
+            <ul class="flex justify-center space-x-4 mt-2">
+                <li><a href="#" class="hover:text-gray-300 transition duration-300">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-gray-300 transition duration-300">Terms of Service</a></li>
+                <li><a href="#" class="hover:text-gray-300 transition duration-300">Sitemap</a></li>
+            </ul>
+             <div class="mt-4 flex justify-center space-x-4">
+                <a href="#" class="text-gray-300 hover:text-white transition duration-300" aria-label="Facebook">Facebook</a>
+                <a href="#" class="text-gray-300 hover:text-white transition duration-300" aria-label="Twitter">Twitter</a>
+                <a href="#" class="text-gray-300 hover:text-white transition duration-300" aria-label="Instagram">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

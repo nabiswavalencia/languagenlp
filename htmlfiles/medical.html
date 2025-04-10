@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the select dropdowns */
+        .custom-select-wrapper {
+            position: relative;
+            user-select: none;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+
+        .custom-select-trigger {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            background-color: white;
+            border-width: 1px;
+            border-color: #d1d5db;
+            border-radius: 0.375rem;
+            color: #374151;
+            cursor: pointer;
+            transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-select-trigger:hover,
+        .custom-select-wrapper:focus-within .custom-select-trigger {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .custom-select-trigger span {
+            margin-right: 0.5rem;
+        }
+
+        .custom-select-trigger svg {
+            height: 1rem;
+            width: 1rem;
+            fill: currentColor;
+            color: #4b5563;
+        }
+
+        .custom-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: auto;
+            z-index: 20;
+            background-color: white;
+            border-width: 1px;
+            border-color: #d1d5db;
+            border-radius: 0.375rem;
+            margin-top: 0.25rem;
+            overflow: auto;
+            max-height: 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out, transform 0.15s ease-in-out;
+            min-width: 200px; /* Ensure options have a minimum width */
+        }
+
+        .custom-select-wrapper.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .custom-options li {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: #374151;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+            white-space: nowrap;
+        }
+
+        .custom-options li:hover,
+        .custom-options li.selected {
+            background-color: #f0f9ff;
+            color: #1e40af;
+        }
+
+        .custom-select-wrapper select {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        #results-container {
+            background-color: white;
+            border-radius: 0.375rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        #results-container h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        #results-container p {
+            color: #374151;
+            line-height: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6">Health Services</h1>
+        <p class="text-gray-700 mb-4">
+            Welcome to the Health Services page. Here you can find information about various health services available in your area.  Use the filters below to narrow down your search by language, service type, and location, or use the search bar to find specific information.
+        </p>
+
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="custom-select-wrapper" id="language-select-wrapper">
+                <div class="custom-select-trigger" id="language-select-trigger">
+                    <span>Language</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                </div>
+                <div class="custom-options" id="language-select-options">
+                    <select class="hidden">
+                        <option value="en">English</option>
+                        <option value="sw">Kiswahili</option>
+                    </select>
+                    <ul>
+                        <li data-value="en">English</li>
+                        <li data-value="sw">Kiswahili</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="custom-select-wrapper" id="service-type-select-wrapper">
+                <div class="custom-select-trigger" id="service-type-select-trigger">
+                    <span>Service Type</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                </div>
+                <div class="custom-options" id="service-type-select-options">
+                    <select class="hidden">
+                        <option value="">All Services</option>
+                        <option value="primary-care">Primary Care</option>
+                        <option value="specialized-clinics">Specialized Clinics</option>
+                        <option value="sexual-health">Sexual Health</option>
+                        <option value="mental-health">Mental Health</option>
+                        <option value="addiction-services">Addiction Services</option>
+                        <option value="community-health">Community Health</option>
+                        <option value="retail-clinics">Retail Clinics</option>
+                        <option value="rural-health">Rural Health</option>
+                    </select>
+                    <ul>
+                        <li data-value="">All Services</li>
+                        <li data-value="primary-care">Primary Care</li>
+                        <li data-value="specialized-clinics">Specialized Clinics</li>
+                        <li data-value="sexual-health">Sexual Health</li>
+                        <li data-value="mental-health">Mental Health</li>
+                        <li data-value="addiction-services">Addiction Services</li>
+                        <li data-value="community-health">Community Health</li>
+                        <li data-value="retail-clinics">Retail Clinics</li>
+                        <li data-value="rural-health">Rural Health</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="custom-select-wrapper" id="location-select-wrapper">
+                <div class="custom-select-trigger" id="location-select-trigger">
+                    <span>Location</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                </div>
+                <div class="custom-options" id="location-select-options">
+                    <select class="hidden">
+                        <option value="">All Locations</option>
+                        <option value="nairobi">Nairobi</option>
+                        <option value="mombasa">Mombasa</option>
+                        <option value="kisumu">Kisumu</option>
+                        <option value="nakuru">Nakuru</option>
+                    </select>
+                    <ul>
+                        <li data-value="">All Locations</li>
+                        <li data-value="nairobi">Nairobi</li>
+                        <li data-value="mombasa">Mombasa</li>
+                        <li data-value="kisumu">Kisumu</li>
+                        <li data-value="nakuru">Nakuru</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <input type="text" id="content-search" placeholder="Search by keyword"
+                       class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <button id="search-button"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+                    Search
+                </button>
+            </div>
+        </div>
+        <button id="reset-button"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-2 px-4 rounded-md transition duration-300 mb-6">
+            Reset
+        </button>
+
+        <div id="results-container" class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Information</h2>
+            <p class="text-gray-600">Select language, service type and location, or use the search bar to find information.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSelectWrapper = document.getElementById('language-select-wrapper');
+            const languageSelectTrigger = document.getElementById('language-select-trigger');
+            const languageSelectOptions = document.getElementById('language-select-options');
+            const languageSelectElement = document.querySelector('#language-select-options select');
+
+            const serviceTypeSelectWrapper = document.getElementById('service-type-select-wrapper');
+            const serviceTypeSelectTrigger = document.getElementById('service-type-select-trigger');
+            const serviceTypeSelectOptions = document.getElementById('service-type-select-options');
+            const serviceTypeSelectElement = document.querySelector('#service-type-options select');
+
+            const locationSelectWrapper = document.getElementById('location-select-wrapper');
+            const locationSelectTrigger = document.getElementById('location-select-trigger');
+            const locationSelectOptions = document.getElementById('location-select-options');
+            const locationSelectElement = document.querySelector('#location-select-options select');
+
+            const resetButton = document.getElementById('reset-button');
+            const searchButton = document.getElementById('search-button');
+            const contentSearchInput = document.getElementById('content-search');
+            const resultsContainer = document.getElementById('results-container');
+
+            let selectedLanguage = '';
+            let selectedServiceType = '';
+            let selectedLocation = '';
+
+            function createCustomDropdown(selectWrapper, selectTrigger, selectOptions, selectElement, onChangeCallback) {
+                selectTrigger.addEventListener('click', () => {
+                    selectWrapper.classList.toggle('open');
+                    if (selectWrapper.classList.contains('open')) {
+                        const triggerRect = selectTrigger.getBoundingClientRect();
+                        selectOptions.style.top = triggerRect.bottom + 'px';
+                        selectOptions.style.left = triggerRect.left + 'px';
+                        selectOptions.style.width = Math.max(triggerRect.width, 200) + 'px';
+                    }
+                });
+
+                selectOptions.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'LI') {
+                        const value = event.target.dataset.value;
+                        const label = event.target.textContent;
+                        selectTrigger.querySelector('span').textContent = label;
+                        selectElement.value = value;
+                        selectWrapper.classList.remove('open');
+                        onChangeCallback(value);
+                        performSearch(selectedLanguage, selectedServiceType, selectedLocation, contentSearchInput.value);
+                    }
+                });
+
+                selectElement.addEventListener('change', (event) => {
+                    const label = selectOptions.querySelector(`[data-value="${event.target.value}"]`).textContent;
+                    selectTrigger.querySelector('span').textContent = label;
+                        onChangeCallback(event.target.value);
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!selectWrapper.contains(event.target) && !selectOptions.contains(event.target)) {
+                        selectWrapper.classList.remove('open');
+                    }
+                });
+            }
+
+            createCustomDropdown(languageSelectWrapper, languageSelectTrigger, languageSelectOptions, languageSelectElement, (value) => {
+                selectedLanguage = value;
+            });
+
+            createCustomDropdown(serviceTypeSelectWrapper, serviceTypeSelectTrigger, serviceTypeSelectOptions, serviceTypeSelectElement, (value) => {
+                selectedServiceType = value;
+            });
+
+            createCustomDropdown(locationSelectWrapper, locationSelectTrigger, locationSelectOptions, locationSelectElement, (value) => {
+                selectedLocation = value;
+            });
+
+            resetButton.addEventListener('click', () => {
+                selectedLanguage = '';
+                selectedServiceType = '';
+                selectedLocation = '';
+                contentSearchInput.value = '';
+                languageSelectTrigger.querySelector('span').textContent = 'Language';
+                serviceTypeSelectTrigger.querySelector('span').textContent = 'Service Type';
+                locationSelectTrigger.querySelector('span').textContent = 'Location';
+                languageSelectElement.value = '';
+                serviceTypeSelectElement.value = '';
+                locationSelectElement.value = '';
+                resultsContainer.innerHTML = '<h2 class="text-xl font-semibold text-gray-800 mb-4">Information</h2><p class="text-gray-600">Select language, service type and location, or use the search bar to find information.</p>';
+            });
+
+            searchButton.addEventListener('click', () => {
+                performSearch(selectedLanguage, selectedServiceType, selectedLocation, contentSearchInput.value);
+            });
+
+            contentSearchInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch(selectedLanguage, selectedServiceType, selectedLocation, contentSearchInput.value);
+                }
+            });
+
+            function performSearch(language, serviceType, location, query) {
+                let resultsHTML = '<h2 class="text-xl font-semibold text-gray-800 mb-4">Information</h2>';
+                let hasResults = false;
+
+                // Simulate health services data
+                const healthServicesData = [
+                    {
+                        language: 'en',
+                        type: 'primary-care',
+                        location: 'nairobi',
+                        title: 'Primary Care Services in Nairobi',
+                        content: 'General health checkups, vaccinations, and treatment of common illnesses.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'primary-care',
+                        location: 'nairobi',
+                        title: 'Huduma za Msingi za Afya Nairobi',
+                        content: 'Ukaguzi wa jumla wa afya, chanjo, na matibabu ya magonjwa ya kawaida.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'specialized-clinics',
+                        location: 'nairobi',
+                        title: 'Specialized Clinics in Nairobi',
+                        content: 'Clinics for specific health needs such as cardiology, dermatology, and oncology.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'specialized-clinics',
+                        location: 'nairobi',
+                        title: 'Kliniki Maalum Nairobi',
+                        content: 'Kliniki za mahitaji maalum ya afya kama vile magonjwa ya moyo, ngozi, na oncology.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'sexual-health',
+                        location: 'nairobi',
+                        title: 'Sexual Health Services in Nairobi',
+                        content: 'Services related to sexual wellness, including testing, treatment, and counseling.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'sexual-health',
+                        location: 'nairobi',
+                        title: 'Huduma za Afya ya Ngono Nairobi',
+                        content: 'Huduma zinazohusiana na ustawi wa ngono, pamoja na upimaji, matibabu, na ushauri nasaha.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'mental-health',
+                        location: 'nairobi',
+                        title: 'Mental Health Services in Nairobi',
+                        content: 'Resources for mental wellness, therapy, and psychiatric care.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'mental-health',
+                        location: 'nairobi',
+                        title: 'Huduma za Afya ya Akili Nairobi',
+                        content: 'Rasilimali za ustawi wa akili, tiba, na huduma ya akili.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'addiction-services',
+                        location: 'nairobi',
+                        title: 'Addiction Services in Nairobi',
+                        content: 'Support and treatment for substance abuse and addiction.',
+                    },
+                    {
+                         language: 'sw',
+                        type: 'addiction-services',
+                        location: 'nairobi',
+                        title: 'Huduma za Uraibu Nairobi',
+                        content: 'Msaada na matibabu ya matumizi mabaya ya dawa na uraibu.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'community-health',
+                        location: 'nairobi',
+                        title: 'Community Health Services in Nairobi',
+                        content: 'Health programs and resources focused on community well-being.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'community-health',
+                        location: 'nairobi',
+                        title: 'Huduma za Afya ya Jamii Nairobi',
+                        content: 'Programu za afya na rasilimali zinazolenga ustawi wa jamii.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'retail-clinics',
+                        location: 'nairobi',
+                        title: 'Retail Clinics in Nairobi',
+                        content: 'Walk-in clinics located in retail settings for minor illnesses and checkups.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'retail-clinics',
+                        location: 'nairobi',
+                        title: 'Kliniki za Rejareja Nairobi',
+                        content: 'Kliniki za kutembea zilizopo katika mazingira ya rejareja kwa magonjwa madogo na ukaguzi.',
+                    },
+                    {
+                        language: 'en',
+                        type: 'rural-health',
+                        location: 'nairobi',
+                        title: 'Rural Health Services in Nairobi',
+                        content: 'Healthcare services provided in rural or underserved areas.',
+                    },
+                    {
+                        language: 'sw',
+                        type: 'rural-health',
+                        location: 'nairobi',
+                        title: 'Huduma za Afya Vijijini Nairobi',
+                        content: 'Huduma za afya zinazotolewa katika maeneo ya vijijini au yasiyopata huduma za kutosha.',
+                    },
+                    // Add more health services data here, in both languages
+                ];
+
+                const filteredResults = healthServicesData.filter(item => {
+                    return (
+                        (!language || item.language === language) &&
+                        (!serviceType || item.type === serviceType) &&
+                        (!location || item.location === location) &&
+                        (!query ||
+                            item.title.toLowerCase().includes(query.toLowerCase()) ||
+                            item.content.toLowerCase().includes(query.toLowerCase()))
+                    );
+                });
+
+                if (filteredResults.length > 0) {
+                    hasResults = true;
+                    resultsHTML += '<ul class="border rounded-md">';
+                    filteredResults.forEach(item => {
+                        resultsHTML += `
+                            <li class="border-b last:border-0 p-4 cursor-pointer" onclick="displayInformation('${item.title}', '${item.content}')">
+                                <h3 class="font-semibold text-lg">${item.title}</h3>
+                                
+                            </li>
+                        `;
+                    });
+                    resultsHTML += '</ul>';
+                }
+
+                resultsContainer.innerHTML = hasResults
+                    ? resultsHTML
+                    : '<h2 class="text-xl font-semibold text-gray-800 mb-4">Information</h2><p class="text-gray-600">No matching information found based on your criteria.</p>';
+            }
+
+            function displayInformation(title, content) {
+                const resultsContainer = document.getElementById('results-container');
+                resultsContainer.innerHTML = `
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">${title}</h2>
+                    <p class="text-gray-700">${content}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
